@@ -2,9 +2,9 @@
 
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
 import { useConfig } from 'wagmi'
-import { writeContract, waitForTransactionReceipt } from 'wagmi/actions'
+import { getAccount, switchChain, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
 import type { Hash } from 'viem'
-import { explorerTx } from '@/lib/chain'
+import { explorerTx, monadTestnet } from '@/lib/chain'
 import { Button, cx } from './ui'
 
 /** One contract call inside a user-facing action. */
@@ -67,10 +67,23 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   const run = useCallback<TxContextValue['run']>(
     async ({ title, summary, steps }) => {
       setBusy(true)
+
+      // The wallet's own selected network is the one that signs. wagmi's useChainId()
+      // reports the config's chain, which with a single-chain config is always Monad — so it
+      // cannot be trusted as a guard. Read the connector's real chain and switch before any
+      // request is built, otherwise the wallet would happily sign this on whatever network
+      // the user happens to be on.
+      const needsSwitch = getAccount(config).chainId !== monadTestnet.id
+
       const initial: RunState = {
         title,
         summary,
-        steps: steps.map((s) => ({ label: s.label, status: 'queued' as const })),
+        steps: [
+          ...(needsSwitch
+            ? [{ label: 'Switch to Monad Testnet', status: 'queued' as const }]
+            : []),
+          ...steps.map((s) => ({ label: s.label, status: 'queued' as const })),
+        ],
         done: false,
         failed: false,
       }
@@ -80,12 +93,33 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
       const push = (patch: Partial<RunState> = {}) =>
         setState({ ...initial, ...patch, steps: [...progress] })
 
-      for (let i = 0; i < steps.length; i++) {
+      const offset = needsSwitch ? 1 : 0
+
+      if (needsSwitch) {
+        progress[0] = { ...progress[0], status: 'signing' }
+        push()
+        try {
+          await switchChain(config, { chainId: monadTestnet.id })
+          progress[0] = { ...progress[0], status: 'success' }
+          push()
+        } catch (error) {
+          progress[0] = { ...progress[0], status: 'error', error: readableError(error) }
+          push({ failed: true, done: true })
+          setBusy(false)
+          return false
+        }
+      }
+
+      for (let i = offset; i < progress.length; i++) {
         progress[i] = { ...progress[i], status: 'signing' }
         push()
         try {
           const started = performance.now()
-          const hash = await writeContract(config, steps[i].request)
+          // Pinning chainId makes wagmi reject (or re-prompt) rather than sign on another network.
+          const hash = await writeContract(config, {
+            ...steps[i - offset].request,
+            chainId: monadTestnet.id,
+          })
           progress[i] = { ...progress[i], status: 'pending', hash }
           push()
 

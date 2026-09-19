@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useAccount, useBalance, useChainId, useConnect, useDisconnect, useSwitchChain } from 'wagmi'
+import { useAccount, useBalance, useConnect, useDisconnect, useSwitchChain } from 'wagmi'
 import { formatUnits } from 'viem'
 import { monadTestnet } from '@/lib/chain'
 import { shortAddress } from '@/lib/format'
@@ -15,12 +15,18 @@ function connectorLabel(name: string) {
 }
 
 export function WalletButton() {
-  const { address, isConnected } = useAccount()
+  // `chainId` here is the connector's real network. useChainId() reports the wagmi config's
+  // chain, which with a single-chain config is always Monad — it would show "connected" even
+  // while the wallet sits on Ethereum, so it must not be used as the network guard.
+  const { address, isConnected, chainId } = useAccount()
   const { connectors, connect, isPending } = useConnect()
   const { disconnect } = useDisconnect()
-  const chainId = useChainId()
   const { switchChain, isPending: switching } = useSwitchChain()
-  const { data: balance } = useBalance({ address, query: { enabled: Boolean(address) } })
+  const { data: balance } = useBalance({
+    address,
+    chainId: monadTestnet.id,
+    query: { enabled: Boolean(address) },
+  })
   const mounted = useIsMounted()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)

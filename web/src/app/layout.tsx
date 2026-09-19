@@ -5,6 +5,7 @@ import { Providers } from './providers'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { PrototypeBanner } from '@/components/PrototypeBanner'
+import { NetworkBanner } from '@/components/NetworkBanner'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <Providers>
           <PrototypeBanner />
+          <NetworkBanner />
           <SiteHeader />
           <main id="main" className="min-h-[70vh]">
             {children}
