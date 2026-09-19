@@ -80,16 +80,39 @@ The Next.js app lives in `web/`, so Vercel needs to be told where the project ro
 
 ### Via the CLI
 
+Run every command from the **repository root**, not from `web/`:
+
 ```bash
 npm i -g vercel
-cd web
-vercel link
-vercel env add NEXT_PUBLIC_FACTORY_ADDRESS production
-# … repeat for each variable …
+vercel login
+vercel link --project <your-project>
+
+# push each variable to all three environments
+printf '%s' "0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01" | vercel env add NEXT_PUBLIC_FACTORY_ADDRESS production
+# … repeat for each variable × production/preview/development …
+
 vercel --prod
 ```
 
-Running `vercel` from inside `web/` sets the root directory correctly without any dashboard step.
+Or push the whole file at once, from the repository root:
+
+```bash
+while IFS='=' read -r k v; do
+  case "$k" in NEXT_PUBLIC_*) ;; *) continue ;; esac
+  [ -z "$v" ] && continue
+  for env in production preview development; do
+    printf '%s' "$v" | vercel env add "$k" "$env" --force
+  done
+done < web/.env.local
+```
+
+> **Deploy from the repository root, not from `web/`.** The project's Root Directory setting is
+> already `web`, so Vercel looks for `web/` *inside whatever you upload*. Running `vercel` from
+> inside `web/` fails with `The specified Root Directory "web" does not exist`. Deploying from the
+> root also matches how the GitHub integration builds, so CLI and git deploys stay identical.
+
+> `vercel link` appends a `VERCEL_OIDC_TOKEN` to `.env.local` and adds `.vercel` to `.gitignore`.
+> Both are expected; neither is committed.
 
 ### Environment variables
 
@@ -104,6 +127,7 @@ Every variable is public — these ship to the browser. No secrets go into Verce
 | `NEXT_PUBLIC_TEST_USD_ADDRESS` | from the deploy output |
 | `NEXT_PUBLIC_VERIFIER_ADDRESS` | from the deploy output |
 | `NEXT_PUBLIC_DEMO_SEED_ADDRESS` | the deployer address (what the demo personas display) |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | your WalletConnect project id — omit it and only injected wallets (MetaMask) work |
 | `NEXT_PUBLIC_REPO_URL` | your GitHub repository URL |
 
 > `NEXT_PUBLIC_*` variables are inlined at **build** time. Changing one in Vercel requires a

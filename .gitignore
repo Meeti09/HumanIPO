@@ -31,3 +31,7 @@ yarn-debug.log*
 yarn-error.log*
 .idea/
 .vscode/
+
+.vercel
+.env*
+!.env.example

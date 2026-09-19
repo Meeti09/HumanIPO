@@ -13,7 +13,7 @@ Built for **Monad Blitz**. Deployed and operational on **Monad Testnet**.
 
 | | |
 | --- | --- |
-| **Live application** | `LIVE_URL_HERE` |
+| **Live application** | https://humanipo.vercel.app |
 | **Repository** | `https://github.com/Meeti09/HumanIPO` |
 | **Network** | Monad Testnet — chain ID **10143** |
 | **ISAFactory** | `0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01` |
@@ -535,7 +535,7 @@ Adding a fee is a small change: an immutable `feeBps` and treasury on the factor
 | Event | Monad Blitz |
 | Network | Monad Testnet (chain ID 10143) |
 | Repository | `https://github.com/Meeti09/HumanIPO` (public) |
-| Live URL | `LIVE_URL_HERE` |
+| Live URL | https://humanipo.vercel.app |
 | Contracts | See the submission summary at the top |
 | Built with | [MonSkills](https://skills.devnads.com/) — scaffold, verification API and Monad gas/concepts guidance |
 

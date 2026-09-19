@@ -5,7 +5,7 @@ claim metrics that have not happened.
 
 Required tags on the launch post: **@monad @monad_dev @geeky_kartikey**
 
-Placeholders to replace everywhere: `LIVE_URL`, `REPO_URL`, `FACTORY_ADDRESS`, `EXPLORER_LINK`.
+All links below are live and filled in. Verify they resolve before posting.
 
 ---
 
@@ -18,8 +18,8 @@ Placeholders to replace everywhere: `LIVE_URL`, `REPO_URL`, `FACTORY_ADDRESS`, `
 >
 > Earn less, pay less. Earn nothing, pay nothing. Hit the cap, you're done.
 >
-> Live on Monad Testnet: LIVE_URL
-> Code: REPO_URL
+> Live on Monad Testnet: https://humanipo.vercel.app
+> Code: https://github.com/Meeti09/HumanIPO
 >
 > @monad @monad_dev @geeky_kartikey
 
@@ -40,8 +40,8 @@ Placeholders to replace everywhere: `LIVE_URL`, `REPO_URL`, `FACTORY_ADDRESS`, `
 > That's why it's on Monad: when a settlement costs a fraction of a cent, monthly stops being the
 > floor.
 >
-> Live on Monad Testnet: LIVE_URL
-> Code and contract addresses: REPO_URL
+> Live on Monad Testnet: https://humanipo.vercel.app
+> Code and contract addresses: https://github.com/Meeti09/HumanIPO
 >
 > Testnet prototype. Demo assets, no real-world value.
 >
@@ -81,9 +81,9 @@ Placeholders to replace everywhere: `LIVE_URL`, `REPO_URL`, `FACTORY_ADDRESS`, `
 
 > 7/ 33 Foundry tests, OpenZeppelin throughout, contracts verified on Monad Testnet.
 >
-> Code: REPO_URL
-> Factory: FACTORY_ADDRESS
-> Live: LIVE_URL
+> Code: https://github.com/Meeti09/HumanIPO
+> Factory: 0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01
+> Live: https://humanipo.vercel.app
 
 ---
 
@@ -96,7 +96,7 @@ Placeholders to replace everywhere: `LIVE_URL`, `REPO_URL`, `FACTORY_ADDRESS`, `
 >
 > Every step is a real transaction. Watch the confirmation times.
 >
-> LIVE_URL
+> https://humanipo.vercel.app
 
 ---
 
@@ -120,7 +120,7 @@ No product footage for the first 20 seconds. Plain type on white, one line at a 
 0:31  [income field: 0 → settles 0]
 0:34  "Capped. Time-limited. Settled on Monad."
 0:38  "Fund a person's future."
-0:41  [LIVE_URL]
+0:41  [https://humanipo.vercel.app]
 ```
 
 Tone: dry, unhurried, no music swell. The joke is the repetition of `$480 due`. No emojis, no
@@ -131,7 +131,7 @@ stock footage, no voiceover.
 > Fixed repayment doesn't care what happened to you. Income share agreements do — they just never
 > got a consumer product. Built one at Monad Blitz.
 >
-> LIVE_URL
+> https://humanipo.vercel.app
 >
 > @monad @monad_dev @geeky_kartikey
 
@@ -145,7 +145,7 @@ See [`VIDEO_SCRIPT.md`](./VIDEO_SCRIPT.md).
 
 ## Posting checklist
 
-- [ ] Replace every `LIVE_URL`, `REPO_URL`, `FACTORY_ADDRESS` placeholder
+- [x] All live/repo/contract links filled in
 - [ ] Launch post includes @monad @monad_dev @geeky_kartikey
 - [ ] Demo video is 30+ seconds and shows the product actually running
 - [ ] Creative ad posted separately from the demo post

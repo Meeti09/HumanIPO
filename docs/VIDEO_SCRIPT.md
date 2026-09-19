@@ -16,7 +16,7 @@ Voiceover is optional — the captions carry it. If you do record VO, keep it fl
 | 0:20–0:26 | Create page → publish. New agreement contract page loads. | **"Publishing deploys your own agreement contract."** |
 | 0:26–0:34 | Recipient panel. Type 4000 in the income field. The "You will owe" row updates to 280. Click Submit income. | **"Report income. The contract applies the percentage, the floor, and the remaining cap — 4,000 becomes 280."** |
 | 0:34–0:40 | Click Settle. Transaction panel shows the confirmation time. Cut to Portfolio: claimable amount appears. Click Claim. | **"Settle, and it splits across funders automatically. Every step is a real transaction on Monad."** |
-| 0:40–0:45 | Cut to Monad Explorer showing the agreement's transaction list. Then a white frame with the wordmark. | **"HumanYield — fund a person's future."** then **LIVE_URL** |
+| 0:40–0:45 | Cut to Monad Explorer showing the agreement's transaction list. Then a white frame with the wordmark. | **"HumanYield — fund a person's future."** then **https://humanipo.vercel.app** |
 
 ---
 
