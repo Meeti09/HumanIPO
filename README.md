@@ -23,6 +23,7 @@ Built for **Monad Blitz**. Deployed and operational on **Monad Testnet**.
 | **Sample agreement (full lifecycle, real history)** | `0x8810f33C793A387509e127Bc54AAe5fCFCBccFe6` |
 | **Explorer** | https://testnet.monadexplorer.com |
 | **Verification** | `Verified — perfect match on MonadVision and Monadscan` |
+| **X Video Link** | https://x.com/MeetiDoshi87205/status/2101264122696651178?s=20 |
 | **Tests** | 33 Foundry tests, all passing (`cd contracts && forge test`) |
 
 > **Prototype for Monad Testnet.** Demo agreements, profiles and the tUSD settlement asset have no
