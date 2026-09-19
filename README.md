@@ -541,7 +541,8 @@ Adding a fee is a small change: an immutable `feeBps` and treasury on the factor
 
 Judge-facing documents:
 
-- [`docs/PITCH.md`](docs/PITCH.md) — the pitch, timed, with anticipated questions
+- [`docs/PITCH.md`](docs/PITCH.md) — the pitch, timed
+- [`docs/JUDGE_QA.md`](docs/JUDGE_QA.md) — anticipated judge questions, with honest answers
 - [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — step-by-step live demo
 - [`docs/HACKATHON_CHECKLIST.md`](docs/HACKATHON_CHECKLIST.md) — rubric checklist
 - [`docs/VIDEO_SCRIPT.md`](docs/VIDEO_SCRIPT.md) and [`docs/SOCIAL_POSTS.md`](docs/SOCIAL_POSTS.md)
