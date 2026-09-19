@@ -12,7 +12,7 @@ Tick a box only when you have personally verified it. Unverified items are worth
 | --- | --- | --- | --- |
 | 1 | Public GitHub repository | 25 | ☐ Repo pushed and set to public |
 | 2 | README with live page, contract address, project explanation, working instructions | 25 | ☑ README complete — verify links resolve after deploy |
-| 3 | Smart contracts deployed on Monad Testnet | 25 | ☐ See addresses below |
+| 3 | Smart contracts deployed on Monad Testnet | 25 | ☑ Deployed — see addresses below |
 | 4 | Project publicly hosted | 25 | ☐ Vercel URL live |
 
 **Verify before ticking #4:** open the live URL in a private window, on a phone, with no wallet
@@ -26,7 +26,7 @@ installed. The landing page and explore page must render and load on-chain data.
 | --- | --- | --- | --- |
 | 1 | All announced functions working | 25 | ☐ Run the full checklist below |
 | 2 | Live transaction on-chain during the demo | 25 | ☐ Rehearse once end to end |
-| 3 | Contract verified on the explorer / source published | 25 | ☐ `npm run contracts:verify` |
+| 3 | Contract verified on the explorer / source published | 25 | ☑ All 4 contracts verified, perfect match on MonadVision + Monadscan |
 | 4 | Someone else can run it from the README without help | 25 | ☐ Fresh-clone test below |
 
 ### Announced-function checklist
@@ -96,19 +96,22 @@ live app pointed at testnet and say so plainly.
 
 ## Deployed addresses
 
-Fill these in from `contracts/deployments/monad-testnet.json` after deploying.
+Deployed 19 Sep 2026. Source of truth: `contracts/deployments/monad-testnet.json`.
 
 | Contract | Address | Explorer |
 | --- | --- | --- |
-| ISAFactory | `TBD` | |
-| TestUSD (tUSD) | `TBD` | |
-| DemoIncomeVerifier | `TBD` | |
-| Sample agreement | `TBD` | |
+| ISAFactory | `0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01` | [view](https://testnet.monadexplorer.com/address/0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01) |
+| TestUSD (tUSD) | `0x9aE4053b0aa7a042eA3355fe743E0C21F2Cb6e95` | [view](https://testnet.monadexplorer.com/address/0x9aE4053b0aa7a042eA3355fe743E0C21F2Cb6e95) |
+| DemoIncomeVerifier | `0x1811389195AC43285f8c9489aDD72a83F2a0A34c` | [view](https://testnet.monadexplorer.com/address/0x1811389195AC43285f8c9489aDD72a83F2a0A34c) |
+| Sample agreement (Sarah Mehta) | `0x53Aa40A42d68E489fC9b694e943Fe00a0CcbFe59` | [view](https://testnet.monadexplorer.com/address/0x53Aa40A42d68E489fC9b694e943Fe00a0CcbFe59) |
+
+Other seeded agreements: Arjun Rao `0xCa5aCbF08d048faa8e6b927f5BCc0C4ee026C754`,
+Maya Kapoor `0x071aC242cf2D41C540768c235CB70e20f414495D`.
 
 - Network: Monad Testnet
 - Chain ID: 10143
 - Live URL: `TBD`
-- Repository: `TBD`
+- Repository: https://github.com/Meeti09/HumanIPO
 
 ---
 

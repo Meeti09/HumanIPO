@@ -7,26 +7,29 @@
 #   bash scripts/verify.sh
 #
 # Requires contracts/deployments/monad-testnet.json (written by Deploy.s.sol).
+#
+# Note: node is invoked with the contracts directory as its cwd and relative paths
+# throughout, so this works under Git Bash on Windows as well as on Linux/macOS.
 
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONTRACTS="$ROOT/contracts"
-DEPLOYMENTS="$CONTRACTS/deployments/monad-testnet.json"
 CHAIN_ID=10143
 COMPILER="v0.8.28+commit.7893614a"
 API="https://agents.devnads.com/v1/verify"
-TMP="$CONTRACTS/.verify-tmp"
 
-if [ ! -f "$DEPLOYMENTS" ]; then
-  echo "Missing $DEPLOYMENTS — deploy first." >&2
+cd "$CONTRACTS"
+
+if [ ! -f "deployments/monad-testnet.json" ]; then
+  echo "Missing contracts/deployments/monad-testnet.json — deploy first." >&2
   exit 1
 fi
 
-mkdir -p "$TMP"
+mkdir -p .verify-tmp
 
 read_address() {
-  node -e "console.log(require('$DEPLOYMENTS').$1)"
+  node -e "console.log(JSON.parse(require('fs').readFileSync('deployments/monad-testnet.json','utf8')).$1)"
 }
 
 verify() {
@@ -35,31 +38,31 @@ verify() {
   echo ""
   echo "── Verifying $contract_name at $address"
 
-  (cd "$CONTRACTS" && forge verify-contract "$address" "$contract_path:$contract_name" \
-    --chain "$CHAIN_ID" --show-standard-json-input) > "$TMP/standard-input.json"
+  forge verify-contract "$address" "$contract_path:$contract_name" \
+    --chain "$CHAIN_ID" --show-standard-json-input > ".verify-tmp/standard-input.json"
 
-  node -e "
+  CONTRACT_NAME="$contract_name" CONTRACT_PATH="$contract_path" ADDRESS="$address" \
+  CTOR_ARGS="$ctor_args" CHAIN_ID="$CHAIN_ID" COMPILER="$COMPILER" node -e "
     const fs = require('fs')
-    const artifact = require('$CONTRACTS/out/$contract_name.sol/$contract_name.json')
-    fs.writeFileSync('$TMP/metadata.json', JSON.stringify(artifact.metadata))
-  "
-
-  node -e "
-    const fs = require('fs')
+    const name = process.env.CONTRACT_NAME
+    const artifact = JSON.parse(
+      fs.readFileSync('out/' + name + '.sol/' + name + '.json', 'utf8')
+    )
     const payload = {
-      chainId: $CHAIN_ID,
-      contractAddress: '$address',
-      contractName: '$contract_path:$contract_name',
-      compilerVersion: '$COMPILER',
-      standardJsonInput: JSON.parse(fs.readFileSync('$TMP/standard-input.json', 'utf8')),
-      foundryMetadata: JSON.parse(fs.readFileSync('$TMP/metadata.json', 'utf8')),
+      chainId: Number(process.env.CHAIN_ID),
+      contractAddress: process.env.ADDRESS,
+      contractName: process.env.CONTRACT_PATH + ':' + name,
+      compilerVersion: process.env.COMPILER,
+      standardJsonInput: JSON.parse(
+        fs.readFileSync('.verify-tmp/standard-input.json', 'utf8')
+      ),
+      foundryMetadata: artifact.metadata,
     }
-    const args = '$ctor_args'
-    if (args) payload.constructorArgs = args
-    fs.writeFileSync('$TMP/request.json', JSON.stringify(payload))
+    if (process.env.CTOR_ARGS) payload.constructorArgs = process.env.CTOR_ARGS
+    fs.writeFileSync('.verify-tmp/request.json', JSON.stringify(payload))
   "
 
-  curl -sS -X POST "$API" -H "Content-Type: application/json" -d @"$TMP/request.json"
+  curl -sS -X POST "$API" -H "Content-Type: application/json" -d @".verify-tmp/request.json"
   echo ""
 }
 
@@ -71,9 +74,9 @@ DEPLOYER=$(read_address deployer)
 verify "$TEST_USD" "src/TestUSD.sol" "TestUSD"
 verify "$VERIFIER" "src/DemoIncomeVerifier.sol" "DemoIncomeVerifier"
 
-FACTORY_ARGS=$(cd "$CONTRACTS" && cast abi-encode "constructor(address,address,address)" "$TEST_USD" "$VERIFIER" "$DEPLOYER")
+FACTORY_ARGS=$(cast abi-encode "constructor(address,address,address)" "$TEST_USD" "$VERIFIER" "$DEPLOYER")
 verify "$FACTORY" "src/ISAFactory.sol" "ISAFactory" "${FACTORY_ARGS#0x}"
 
 echo ""
 echo "Done. Check each contract on https://testnet.monadexplorer.com/address/<address>"
-rm -rf "$TMP"
+rm -rf .verify-tmp

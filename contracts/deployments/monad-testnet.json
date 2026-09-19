@@ -1,0 +1,8 @@
+{
+  "chainId": 10143,
+  "network": "monad-testnet",
+  "deployer": "0x64f39F5cDbF746d968e781D7e1b51315D6384C7e",
+  "testUsd": "0x9aE4053b0aa7a042eA3355fe743E0C21F2Cb6e95",
+  "incomeVerifier": "0x1811389195AC43285f8c9489aDD72a83F2a0A34c",
+  "isaFactory": "0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01"
+}

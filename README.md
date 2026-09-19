@@ -14,14 +14,14 @@ Built for **Monad Blitz**. Deployed and operational on **Monad Testnet**.
 | | |
 | --- | --- |
 | **Live application** | `LIVE_URL_HERE` |
-| **Repository** | `REPO_URL_HERE` |
+| **Repository** | `https://github.com/Meeti09/HumanIPO` |
 | **Network** | Monad Testnet — chain ID **10143** |
-| **ISAFactory** | `FACTORY_ADDRESS_HERE` |
-| **TestUSD (tUSD)** | `TEST_USD_ADDRESS_HERE` |
-| **DemoIncomeVerifier** | `VERIFIER_ADDRESS_HERE` |
-| **Sample agreement** | `SAMPLE_AGREEMENT_HERE` |
+| **ISAFactory** | `0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01` |
+| **TestUSD (tUSD)** | `0x9aE4053b0aa7a042eA3355fe743E0C21F2Cb6e95` |
+| **DemoIncomeVerifier** | `0x1811389195AC43285f8c9489aDD72a83F2a0A34c` |
+| **Sample agreement** | `0x53Aa40A42d68E489fC9b694e943Fe00a0CcbFe59` |
 | **Explorer** | https://testnet.monadexplorer.com |
-| **Verification** | `VERIFICATION_STATUS_HERE` |
+| **Verification** | `Verified — perfect match on MonadVision and Monadscan` |
 | **Tests** | 33 Foundry tests, all passing (`cd contracts && forge test`) |
 
 > **Prototype for Monad Testnet.** Demo agreements, profiles and the tUSD settlement asset have no
@@ -208,7 +208,7 @@ and cannot sign anything. Every on-chain action still requires a connected walle
 ### 1. Clone and install
 
 ```bash
-git clone REPO_URL_HERE humanyield
+git clone https://github.com/Meeti09/HumanIPO humanyield
 cd humanyield
 npm --prefix web install
 cd contracts && forge install --no-git OpenZeppelin/openzeppelin-contracts && cd ..
@@ -231,9 +231,9 @@ cp web/.env.example web/.env.local
 Then set these in `web/.env.local` — the live values are in the table at the top of this README:
 
 ```
-NEXT_PUBLIC_FACTORY_ADDRESS=FACTORY_ADDRESS_HERE
-NEXT_PUBLIC_TEST_USD_ADDRESS=TEST_USD_ADDRESS_HERE
-NEXT_PUBLIC_VERIFIER_ADDRESS=VERIFIER_ADDRESS_HERE
+NEXT_PUBLIC_FACTORY_ADDRESS=0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01
+NEXT_PUBLIC_TEST_USD_ADDRESS=0x9aE4053b0aa7a042eA3355fe743E0C21F2Cb6e95
+NEXT_PUBLIC_VERIFIER_ADDRESS=0x1811389195AC43285f8c9489aDD72a83F2a0A34c
 ```
 
 ### 4. Start the app
@@ -482,7 +482,7 @@ Adding a fee is a small change: an immutable `feeBps` and treasury on the factor
 | --- | --- |
 | Event | Monad Blitz |
 | Network | Monad Testnet (chain ID 10143) |
-| Repository | `REPO_URL_HERE` (public) |
+| Repository | `https://github.com/Meeti09/HumanIPO` (public) |
 | Live URL | `LIVE_URL_HERE` |
 | Contracts | See the submission summary at the top |
 | Built with | [MonSkills](https://skills.devnads.com/) — scaffold, verification API and Monad gas/concepts guidance |
