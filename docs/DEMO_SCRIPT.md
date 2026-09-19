@@ -2,6 +2,18 @@
 
 **Target length: 4 minutes.** Every step below executes a real transaction on Monad Testnet.
 
+## Live references
+
+| | |
+| --- | --- |
+| Open raise to invest in | **Sarah Mehta** — `0x53Aa40A42d68E489fC9b694e943Fe00a0CcbFe59` (3,000 of 5,000 raised) |
+| Already-running agreement with real history | **Priya Nair** — `0x8810f33C793A387509e127Bc54AAe5fCFCBccFe6` (2 funders, 3 reported periods, 660 tUSD settled) |
+| Factory | `0xdaA1Dca29D758cEc7B3bA659c2921ccCcd494c01` |
+
+Priya's agreement is the fallback if anything goes wrong live: it already shows the whole
+lifecycle — a filled raise, an income history including a zero-income month, settlements, and a
+partly-claimed distribution — with every transaction on the explorer.
+
 ## Before you start
 
 - [ ] Wallet connected to Monad Testnet (chain 10143) with at least 0.5 MON for gas
@@ -10,7 +22,8 @@
 - [ ] Faucet already used once so you are holding tUSD (saves 20 seconds on stage)
 
 If anything fails mid-demo, the fallback is the agreement detail page — all state is read live from
-the contract, so a refresh recovers.
+the contract, so a refresh recovers. If a transaction itself fails, open Priya Nair's agreement and
+narrate the completed history instead; it is all real and already on-chain.
 
 ---
 
