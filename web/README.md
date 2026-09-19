@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HumanYield — web
 
-## Getting Started
+Next.js frontend for HumanYield. See the [repository README](../README.md) for the project
+overview, deployed contract addresses, and full setup instructions.
 
-First, run the development server:
+## Quick start
 
 ```bash
+cp .env.example .env.local     # then paste the deployed contract addresses
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── page.tsx                  landing
+│   ├── explore/                  all agreements (cards + table)
+│   ├── agreement/[address]/      detail, invest, recipient controls, history
+│   ├── dashboard/                investor portfolio and claims
+│   ├── recipient/                income reporting and settlement
+│   ├── create/                   publish an agreement
+│   ├── transparency/             contracts, enforced rules, known limitations
+│   └── providers.tsx             wagmi + react-query + demo + transaction providers
+├── components/
+│   ├── ui.tsx                    design-system primitives
+│   ├── TransactionProvider.tsx   multi-step tx runner and status panel
+│   ├── DemoProvider.tsx          read-only demo identities
+│   ├── InvestPanel / RecipientPanel / PositionPanel
+│   └── …
+├── hooks/useAgreements.ts        every contract read, batched where possible
+└── lib/
+    ├── abis.ts                   generated — `node ../scripts/generate-abis.mjs`
+    ├── chain.ts                  Monad Testnet config and explorer helpers
+    ├── contracts.ts              deployed addresses from the environment
+    ├── format.ts                 token, bps and date formatting
+    └── wagmi.ts                  wagmi config (injected connector, multicall batching)
+```
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **No backend and no database.** Every figure on screen is read from the contracts.
+- `src/lib/abis.ts` is generated from the Foundry build output. After changing a contract, run
+  `cd ../contracts && forge build && cd .. && node scripts/generate-abis.mjs`.
+- Light theme only. Design tokens are defined in `src/app/globals.css` under `@theme`.
+- Deployment instructions, including the Vercel root-directory setting, are in
+  [`../docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md).

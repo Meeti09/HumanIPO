@@ -4,9 +4,8 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from 'react'
 import { useAccount } from 'wagmi'
@@ -62,23 +61,43 @@ const DemoContext = createContext<DemoContextValue | null>(null)
 
 const STORAGE_KEY = 'humanyield.demo-role'
 
+// The selected persona lives in localStorage so it survives a reload. Reading it through
+// useSyncExternalStore keeps server and first-client renders consistent without a setState
+// cascade in an effect.
+let listeners: Array<() => void> = []
+
+function subscribe(listener: () => void) {
+  listeners.push(listener)
+  window.addEventListener('storage', listener)
+  return () => {
+    listeners = listeners.filter((l) => l !== listener)
+    window.removeEventListener('storage', listener)
+  }
+}
+
+function emit() {
+  for (const listener of listeners) listener()
+}
+
+function getSnapshot(): DemoRole | null {
+  const stored = window.localStorage.getItem(STORAGE_KEY)
+  return stored === 'investor' || stored === 'recipient' ? stored : null
+}
+
+const getServerSnapshot = (): DemoRole | null => null
+
 export function DemoProvider({ children }: { children: ReactNode }) {
   const { address } = useAccount()
-  const [role, setRole] = useState<DemoRole | null>(null)
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY)
-    if (stored === 'investor' || stored === 'recipient') setRole(stored)
-  }, [])
+  const role = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   const signIn = useCallback((next: DemoRole) => {
     window.localStorage.setItem(STORAGE_KEY, next)
-    setRole(next)
+    emit()
   }, [])
 
   const signOut = useCallback(() => {
     window.localStorage.removeItem(STORAGE_KEY)
-    setRole(null)
+    emit()
   }, [])
 
   const identity = useMemo(

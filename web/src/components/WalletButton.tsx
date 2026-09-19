@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useAccount, useBalance, useChainId, useConnect, useDisconnect, useSwitchChain } from 'wagmi'
 import { formatUnits } from 'viem'
 import { monadTestnet } from '@/lib/chain'
 import { shortAddress } from '@/lib/format'
+import { useIsMounted } from '@/hooks/useIsMounted'
 import { Button } from './ui'
 
 export function WalletButton() {
@@ -14,9 +14,7 @@ export function WalletButton() {
   const chainId = useChainId()
   const { switchChain, isPending: switching } = useSwitchChain()
   const { data: balance } = useBalance({ address, query: { enabled: Boolean(address) } })
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  const mounted = useIsMounted()
 
   // Avoid a hydration mismatch: wallet state is only known on the client.
   if (!mounted) {

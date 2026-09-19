@@ -24,7 +24,7 @@ import {
   Stat,
   statusTone,
 } from '@/components/ui'
-import { formatDateTime, formatToken, shortAddress } from '@/lib/format'
+import { formatToken, shortAddress } from '@/lib/format'
 import { STATUS_LABEL } from '@/lib/types'
 import { CONTRACTS_CONFIGURED } from '@/lib/contracts'
 

@@ -1,16 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useIsMounted } from '@/hooks/useIsMounted'
 import { DEMO_IDENTITIES, useDemo } from './DemoProvider'
 import { Button, cx } from './ui'
 
 export function DemoSignIn() {
   const { identity, signIn, signOut } = useDemo()
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useIsMounted()
   const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     if (!open) return
