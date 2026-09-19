@@ -46,6 +46,8 @@ Every feature named in the pitch must actually work. Test each on the deployed a
 - [ ] Recipient: submit income, obligation matches `calculateContribution`
 - [ ] Recipient: settle repayment
 - [ ] Investor: claim distribution, portfolio totals update
+- [ ] Guided demo (/demo) — all eight steps unlock and complete in order
+- [ ] Activity (/activity) — on-chain timeline populates, your transactions list shows hashes
 - [ ] Every transaction shows a working Monad Explorer link
 - [ ] Mobile layout does not break
 

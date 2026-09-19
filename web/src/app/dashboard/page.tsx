@@ -9,6 +9,8 @@ import {
   useInvestorPositions,
   useTokenBalance,
 } from '@/hooks/useAgreements'
+import { useActivity } from '@/hooks/useActivity'
+import { ActivityFeed } from '@/components/ActivityFeed'
 import { useDemo } from '@/components/DemoProvider'
 import { useTx } from '@/components/TransactionProvider'
 import { FaucetButton } from '@/components/FaucetButton'
@@ -37,6 +39,7 @@ export default function DashboardPage() {
   const { positions, isLoading } = useInvestorPositions(viewAddress)
   const { agreements } = useAgreementsByAddress(positions.map((p) => p.agreement))
   const { balance } = useTokenBalance(address)
+  const { events } = useActivity(agreements)
 
   const totalFunded = positions.reduce((sum, p) => sum + p.contribution, 0n)
   const totalClaimable = positions.reduce((sum, p) => sum + p.claimable, 0n)
@@ -274,6 +277,21 @@ export default function DashboardPage() {
               </tbody>
             </table>
           </div>
+        </Card>
+      ) : null}
+
+      {agreements.length > 0 ? (
+        <Card className="mt-8">
+          <CardHeader
+            title="Recent activity"
+            description="Across the agreements you hold, read from contract state."
+            action={
+              <Link href="/activity" className="text-sm text-accent hover:underline">
+                View all
+              </Link>
+            }
+          />
+          <ActivityFeed events={events} limit={8} />
         </Card>
       ) : null}
     </div>

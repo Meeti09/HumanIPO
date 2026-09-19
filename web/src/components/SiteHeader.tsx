@@ -11,7 +11,9 @@ const NAV = [
   { href: '/explore', label: 'Explore' },
   { href: '/dashboard', label: 'Portfolio' },
   { href: '/recipient', label: 'My agreements' },
+  { href: '/activity', label: 'Activity' },
   { href: '/create', label: 'Raise funding' },
+  { href: '/demo', label: 'Guided demo' },
 ]
 
 export function SiteHeader() {

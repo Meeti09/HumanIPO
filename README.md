@@ -112,6 +112,8 @@ tooling.
                          │  /dashboard portfolio + claims       │
                          │  /recipient income reporting         │
                          │  /create    publish an agreement     │
+                         │  /demo      guided 8-step lifecycle  │
+                         │  /activity  on-chain history + hashes│
                          │  /transparency  contracts & limits   │
                          └───────────────────┬──────────────────┘
                                              │ wagmi · viem
@@ -192,10 +194,37 @@ and you will see:
 
 Every one of those is a transaction you can click through on the explorer.
 
-### Running it yourself
+### Running it yourself — the guided path
 
-The full lifecycle takes about three minutes and every step is a real Monad Testnet transaction.
-Step-by-step narration is in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md).
+Open **`/demo`**. The agreements on Explore belong to other wallets, so you can only fund those;
+this page publishes an agreement where **you are the recipient** and walks the entire lifecycle in
+eight gated steps, each a real transaction:
+
+1. Connect a wallet → 2. Faucet 10,000 tUSD → 3. Publish your agreement (deploys a contract)
+→ 4. Fund it to the goal (activates in the same transaction) → 5. Withdraw the capital
+→ 6. Report 4,000 tUSD of income (the amount owed comes from calling `calculateContribution` on
+your contract, not from the page) → 7. Settle → 8. Claim the distribution
+
+Each step unlocks only when the previous one is confirmed on-chain, and the figures are small
+enough that one faucet allocation covers the whole run. About two minutes.
+
+### Transaction history
+
+**`/activity`** has two feeds:
+
+- **On-chain activity** — every publication, activation, income report and settlement across all
+  agreements, with timestamps. Reconstructed from contract state, because Monad's public RPC caps
+  `eth_getLogs` at a **100-block range** (about 40 seconds at 400ms blocks), which makes a log scan
+  useless for history. Each agreement stores `createdAt`, `startTime` and a full `IncomePeriod[]`
+  with `reportedAt` / `settledAt`, so the timeline is complete with no indexer and no range limit.
+- **Your transactions** — hashes of everything signed from this browser, with explorer links, kept
+  in `localStorage` and never sent anywhere.
+
+A condensed version of the first feed also appears on the portfolio dashboard.
+
+### Narrated demo
+
+Step-by-step narration for presenting is in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md).
 
 1. **Explore** → open a seeded agreement (e.g. *Sarah Mehta — AI Career Transition*).
 2. **Invest** 500 tUSD. The panel shows your exact ownership before you sign. → *2 transactions*

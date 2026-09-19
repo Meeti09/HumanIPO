@@ -83,8 +83,15 @@ export default function RecipientPage() {
         ) : agreements.length === 0 ? (
           <EmptyState
             title="No agreements yet"
-            description="Publish an agreement and it appears here with income reporting and settlement controls."
-            action={<ButtonLink href="/create">Create an agreement</ButtonLink>}
+            description="Agreements on Explore belong to other wallets, so you can only fund those. Publish your own and this page gains income reporting and settlement controls."
+            action={
+              <div className="flex flex-wrap justify-center gap-3">
+                <ButtonLink href="/demo">Run the guided lifecycle</ButtonLink>
+                <ButtonLink href="/create" variant="secondary">
+                  Create an agreement
+                </ButtonLink>
+              </div>
+            }
           />
         ) : (
           agreements.map((a) => (

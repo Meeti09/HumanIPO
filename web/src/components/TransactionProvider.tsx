@@ -5,6 +5,7 @@ import { useConfig } from 'wagmi'
 import { getAccount, switchChain, writeContract, waitForTransactionReceipt } from 'wagmi/actions'
 import type { Hash } from 'viem'
 import { explorerTx, monadTestnet } from '@/lib/chain'
+import { recordTransaction } from '@/hooks/useTxHistory'
 import { Button, cx } from './ui'
 
 /** One contract call inside a user-facing action. */
@@ -125,7 +126,17 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
 
           const receipt = await waitForTransactionReceipt(config, { hash })
           const elapsedMs = Math.round(performance.now() - started)
-          if (receipt.status === 'reverted') {
+          const reverted = receipt.status === 'reverted'
+
+          recordTransaction({
+            hash,
+            label: progress[i].label,
+            title,
+            at: Date.now(),
+            status: reverted ? 'failed' : 'success',
+          })
+
+          if (reverted) {
             progress[i] = { ...progress[i], status: 'error', error: 'Reverted on-chain.', elapsedMs }
             push({ failed: true, done: true })
             setBusy(false)

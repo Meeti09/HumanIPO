@@ -70,22 +70,25 @@ Click **Invest 500 tUSD**. Approve, then fund.
 
 ## 1:45 — Become the recipient (45 seconds)
 
-Go to **Raise funding** (`/create`). The form is pre-filled with demo terms.
+Go to **Guided demo** (`/demo`). Steps 1–2 are already green if you prepped.
 
-Type a display name, click **Review terms**, then **Publish agreement**.
+Click **Publish agreement** (step 3).
 
 > "Publishing deploys a brand new contract — this person's own agreement, with their own address on
 > the explorer. One transaction, about a second."
 
-You land on the new agreement page. Fund it yourself with the remaining goal so it activates.
+Then **Fund 1,000 tUSD** (step 4).
 
-> "I'll fund my own agreement to close the raise. Funding it to the goal activates it in the same
-> transaction and starts the term."
+> "Normally other people fund this. I'll fund my own raise to close it — and filling the goal
+> activates the agreement in the same transaction, starting the term."
+
+Then **Withdraw** (step 5).
+
+> "The capital goes to the recipient. That's the money that pays for the course."
 
 ## 2:30 — Report income and settle (60 seconds)
 
-The right panel now shows recipient controls. Click **Withdraw** to take the capital, then enter
-**4000** in the income field.
+Step 6 shows the income figure already filled in at 4,000.
 
 > "Now the interesting part. I report four thousand of monthly income. The number underneath isn't
 > computed in JavaScript — the app is calling `calculateContribution` on the contract, which applies
@@ -107,10 +110,21 @@ Click **Submit income** → then **Settle 280 tUSD**.
 
 ## 3:30 — Claim and verify (30 seconds)
 
-Go to **Portfolio**. The position shows up with an amount available to claim. Click **Claim**.
+Step 8: click **Claim**.
 
 > "Distribution is pull-based, so it scales to any number of funders without a loop in the payment
 > path."
+
+Now go to **Activity**.
+
+> "Every publication, income report and settlement across the whole product, with timestamps. And
+> underneath, every transaction I just signed, with its hash."
+
+One line worth saying, because judges will wonder why there's no indexer:
+
+> "Monad's public RPC caps `eth_getLogs` at a hundred blocks — about forty seconds of history. So
+> instead of scanning logs, the agreements store their own history as state and the app reads it
+> back. No indexer, no backend, no range limit."
 
 Switch to the explorer tab. Paste the agreement address.
 
