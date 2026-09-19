@@ -1,0 +1,33 @@
+# secrets
+.env
+.env.local
+.env*.local
+contracts/.env
+contracts/.deployer.json
+
+# foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/lib/
+
+# node
+node_modules/
+.pnp
+.pnp.js
+
+# next
+web/.next/
+web/out/
+web/build/
+web/.vercel/
+next-env.d.ts
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.idea/
+.vscode/

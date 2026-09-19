@@ -1,0 +1,19 @@
+{
+  "name": "humanyield",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Income Share Agreements as a consumer product, settled on Monad.",
+  "scripts": {
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "start": "npm --prefix web run start",
+    "lint": "npm --prefix web run lint",
+    "install:web": "npm --prefix web install",
+    "contracts:build": "cd contracts && forge build",
+    "contracts:test": "cd contracts && forge test -vv",
+    "contracts:deploy": "cd contracts && forge script script/Deploy.s.sol:Deploy --rpc-url $MONAD_TESTNET_RPC_URL --broadcast",
+    "contracts:seed": "cd contracts && forge script script/Seed.s.sol:Seed --rpc-url $MONAD_TESTNET_RPC_URL --broadcast",
+    "contracts:verify": "bash scripts/verify.sh",
+    "abis": "node scripts/generate-abis.mjs"
+  }
+}
